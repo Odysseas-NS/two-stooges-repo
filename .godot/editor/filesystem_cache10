@@ -1,3 +1,10 @@
 63f7b34db8d8cdea90c76aacccf841ec
-::res://::1766243564
+::res://::1766318870
 icon.svg::CompressedTexture2D::6349864121372261435::1766243549::1766243566::1::::<><><>0<>0<>e7a2c05be533dc055881ce768a7ff2bf<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+README.md::TextFile::-1::1766250936::0::1::::<><><>0<>0<><>::
+::res://assets/::1766319051
+::res://assets/characters/::1766318961
+Orc.png::CompressedTexture2D::8344349447845879081::1766317452::1766319056::1::::<><><>0<>0<>9cce13ce6accf8218c402bb220063d83<>res://.godot/imported/Orc.png-47f634ffb9c954c67d73f58a5a61b809.ctex::
+::res://scenes/::1766318870
+::res://scenes/characters/::1766318952
+orc.tscn::PackedScene::-1::1766319054::0::1::::<><><>0<>0<><>::res://assets/Characters/Orc.png

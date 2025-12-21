@@ -1,1 +1,14 @@
+# Godot 4+ specific ignores
+.godot/
+
+# Godot-specific
+*.translation
+*.import
+
+# Mono-specific ignores (if using C#)
+.mono/
+data_*/
+mono_crash.*.json
+
+# IDE specific
 .vscode
