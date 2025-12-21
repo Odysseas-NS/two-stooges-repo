@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://ckli7uls0ics3"]
+
+[ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="1_map"]
+[ext_resource type="PackedScene" uid="uid://bmby044nntuq1" path="res://scenes/characters/orc.tscn" id="2_orc"]
+
+[node name="Main" type="Node2D"]
+
+[node name="Map" parent="." instance=ExtResource("1_map")]
+
+[node name="Orc" parent="." instance=ExtResource("2_orc")]
+position = Vector2(960, 540)
