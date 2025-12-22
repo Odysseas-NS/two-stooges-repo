@@ -1,14 +1,75 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=7 format=3 uid="uid://bmby044nntuq1"]
 
-[ext_resource type="Texture2D" path="res://assets/characters/Orc.png" id="1_x7k3h"]
+[ext_resource type="Script" uid="uid://ddalij5uwrrac" path="res://scenes/characters/character_body_2d.gd" id="1_kq1j6"]
+[ext_resource type="Texture2D" uid="uid://dq5chmayrax66" path="res://assets/characters/Orc.png" id="1_x7k3h"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y5xp"]
-size = Vector2(32, 32)
+[sub_resource type="Animation" id="Animation_hhhgf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+
+[sub_resource type="Animation" id="Animation_pnpsw"]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_kq1j6"]
+resource_name = "right"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.19999999, 0.3, 0.39999998, 0.5, 0.6, 0.70000005, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [8, 9, 10, 11, 12, 13, 14, 15, 8]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_fjg81"]
+_data = {
+&"RESET": SubResource("Animation_hhhgf"),
+&"idle": SubResource("Animation_pnpsw"),
+&"right": SubResource("Animation_kq1j6")
+}
 
 [node name="Orc" type="CharacterBody2D"]
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+script = ExtResource("1_kq1j6")
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
 texture = ExtResource("1_x7k3h")
 hframes = 8
 vframes = 6
-frame = 0
+frame = 8
+
+[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
+zoom = Vector2(3, 3)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_fjg81")
+}
