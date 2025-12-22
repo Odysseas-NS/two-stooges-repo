@@ -1,0 +1,14 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/characters/Orc.png" id="1_x7k3h"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7y5xp"]
+size = Vector2(32, 32)
+
+[node name="Orc" type="CharacterBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_x7k3h")
+hframes = 8
+vframes = 6
+frame = 0
