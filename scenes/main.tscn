@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckli7uls0ics3"]
+[gd_scene load_steps=5 format=3 uid="uid://ckli7uls0ics3"]
 
 [ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="1_map"]
 [ext_resource type="PackedScene" uid="uid://bmby044nntuq1" path="res://scenes/characters/orc.tscn" id="2_orc"]
+[ext_resource type="Script" path="res://scenes/spawner/enemy_spawner.gd" id="3_spawner"]
+[ext_resource type="PackedScene" uid="uid://c8iam4p2qr5s6" path="res://scenes/npcs/enemies/soldier.tscn" id="4_soldier"]
 
 [node name="Main" type="Node2D"]
 
@@ -9,3 +11,6 @@
 
 [node name="Orc" parent="." instance=ExtResource("2_orc")]
 position = Vector2(960, 540)
+[node name="EnemySpawner" type="Node2D" parent="."]
+script = ExtResource("3_spawner")
+soldier_scene = ExtResource("4_soldier")
