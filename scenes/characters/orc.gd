@@ -32,5 +32,5 @@ func _physics_process(delta: float) -> void:
 
 # Function to call for animations
 func update_animation(animation):
-	# Get the AnimationPlayer from parent (Orc node)
-	get_parent().get_node("AnimationPlayer").play(animation)
+	# Get the AnimationPlayer from node (Orc node)
+	get_node("AnimationPlayer").play(animation)

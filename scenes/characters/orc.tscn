@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bmby044nntuq1"]
 
-[ext_resource type="Script" uid="uid://ddalij5uwrrac" path="res://scenes/characters/character_body_2d.gd" id="1_kq1j6"]
+[ext_resource type="Script" uid="uid://cp7rup12cnufr" path="res://scenes/characters/orc.gd" id="1_hhhgf"]
 [ext_resource type="Texture2D" uid="uid://dq5chmayrax66" path="res://assets/characters/Orc.png" id="1_x7k3h"]
 
 [sub_resource type="Animation" id="Animation_hhhgf"]
@@ -8,7 +8,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -23,7 +23,7 @@ resource_name = "idle"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -38,7 +38,7 @@ resource_name = "right"
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("CharacterBody2D/Sprite2D:frame")
+tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -56,18 +56,16 @@ _data = {
 }
 
 [node name="Orc" type="CharacterBody2D"]
+script = ExtResource("1_hhhgf")
 
-[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
-script = ExtResource("1_kq1j6")
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(3, 3)
 
-[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_x7k3h")
 hframes = 8
 vframes = 6
 frame = 8
-
-[node name="Camera2D" type="Camera2D" parent="CharacterBody2D"]
-zoom = Vector2(3, 3)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
