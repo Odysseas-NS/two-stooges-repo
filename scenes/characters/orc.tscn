@@ -1,6 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://bmby044nntuq1"]
+[gd_scene load_steps=8 format=3 uid="uid://bmby044nntuq1"]
 
-[ext_resource type="Script" uid="uid://cp7rup12cnufr" path="res://scenes/characters/orc.gd" id="1_hhhgf"]
+[ext_resource type="Script" path="res://scenes/characters/orc.gd" id="1_hhhgf"]
 [ext_resource type="Texture2D" uid="uid://dq5chmayrax66" path="res://assets/characters/Orc.png" id="1_x7k3h"]
 
 [sub_resource type="Animation" id="Animation_hhhgf"]
@@ -55,6 +55,10 @@ _data = {
 &"right": SubResource("Animation_kq1j6")
 }
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_kq1j6"]
+radius = 4.0
+height = 14.0
+
 [node name="Orc" type="CharacterBody2D"]
 script = ExtResource("1_hhhgf")
 
@@ -71,3 +75,7 @@ frame = 8
 libraries = {
 &"": SubResource("AnimationLibrary_fjg81")
 }
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 0)
+shape = SubResource("CapsuleShape2D_kq1j6")
