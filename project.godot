@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="New Game Project"
+config/name="Two Stooges"
 run/main_scene="uid://be7k5ypbb0km0"
 config/features=PackedStringArray("4.5", "Forward Plus")
 config/icon="res://icon.svg"
