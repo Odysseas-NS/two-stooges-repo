@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://0dv7knm4njyu"]
+
+[ext_resource type="Script" uid="uid://c3ts7hwp1ucck" path="res://scripts/aoe_burst.gd" id="1_aoe"]
+
+[sub_resource type="CurveTexture" id="CurveTexture_i04gr"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ybvlo"]
+radius = 341.0528
+
+[node name="AoEBurst" type="Node2D"]
+script = ExtResource("1_aoe")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+modulate = Color(0.9137255, 0.9137255, 0.9137255, 0.35686275)
+position = Vector2(2.2888184e-05, 1.000021)
+scale = Vector2(2.6875002, 688.00006)
+texture = SubResource("CurveTexture_i04gr")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_ybvlo")
+debug_color = Color(0.58127, 0.38284603, 1, 0.41960785)

@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://dl15rqymreh3c"]
+
+[ext_resource type="Script" uid="uid://cvpxaro4io8h6" path="res://scripts/xp_gem.gd" id="1_44xmx"]
+
+[sub_resource type="Gradient" id="Gradient_rdt04"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_44xmx"]
+gradient = SubResource("Gradient_rdt04")
+fill_from = Vector2(1, 0)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ceh8h"]
+radius = 8.0
+
+[node name="XPGem" type="Area2D"]
+collision_layer = 4
+script = ExtResource("1_44xmx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.21875001, 0.21875085)
+texture = SubResource("GradientTexture2D_44xmx")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ceh8h")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

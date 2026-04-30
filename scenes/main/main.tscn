@@ -1,0 +1,111 @@
+[gd_scene load_steps=7 format=3 uid="uid://be7k5ypbb0km0"]
+
+[ext_resource type="PackedScene" uid="uid://d1w5ccem33kle" path="res://scenes/player/player.tscn" id="1_hyk8p"]
+[ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main.gd" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://drhkcd78218ty" path="res://scenes/enemy/enemy.tscn" id="2_k2fmo"]
+[ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/difficulty_manager.gd" id="4_l3cfh"]
+[ext_resource type="Texture2D" uid="uid://caqfk2xng5v5u" path="res://trees/pine_tree.png" id="6_ow5a4"]
+[ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/upgrade_manager.gd" id="6_upgrade_mgr"]
+
+[node name="Main" type="Node2D" groups=["main"]]
+script = ExtResource("1_iuonh")
+enemy_scene = ExtResource("2_k2fmo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -1
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -526.0
+offset_top = -348.0
+offset_right = 4538.3984
+offset_bottom = 2518.0
+color = Color(0, 0.5622662, 9.62615e-07, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_hyk8p")]
+position = Vector2(1838, 996)
+
+[node name="EnemySpawner" type="Timer" parent="."]
+autostart = true
+
+[node name="DifficultyManager" type="Node" parent="."]
+script = ExtResource("4_l3cfh")
+
+[node name="UpgradeManager" type="Node" parent="."]
+script = ExtResource("6_upgrade_mgr")
+
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -64.012085
+offset_top = -46.0
+offset_right = 64.01221
+offset_bottom = 46.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.827451)
+
+[node name="Label" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -162.1333
+offset_top = -36.0
+offset_right = 162.1333
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.77157766, 2.2862107e-06, 1.0588765e-06, 1)
+theme_override_font_sizes/font_size = 160
+text = "GAME OVER NIGGA"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PineTree" type="Sprite2D" parent="."]
+position = Vector2(563, 688.00006)
+scale = Vector2(0.2890625, 0.3223684)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree2" type="Sprite2D" parent="."]
+position = Vector2(679.00006, 514)
+scale = Vector2(0.3984375, 0.38157895)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree3" type="Sprite2D" parent="."]
+position = Vector2(740, 826)
+scale = Vector2(0.3125, 0.35526314)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree4" type="Sprite2D" parent="."]
+position = Vector2(805.00006, 405.00003)
+scale = Vector2(0.2695311, 0.34210533)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree5" type="Sprite2D" parent="."]
+position = Vector2(1057, 406)
+scale = Vector2(0.296875, 0.29605263)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree6" type="Sprite2D" parent="."]
+position = Vector2(1132, 591)
+scale = Vector2(0.2734375, 0.23684211)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree7" type="Sprite2D" parent="."]
+position = Vector2(889, 766)
+scale = Vector2(0.3984375, 0.31578946)
+texture = ExtResource("6_ow5a4")
+
+[node name="PineTree8" type="Sprite2D" parent="."]
+position = Vector2(1041, 763)
+scale = Vector2(0.3046875, 0.26973686)
+texture = ExtResource("6_ow5a4")
+
+[connection signal="timeout" from="EnemySpawner" to="." method="_on_enemy_spawner_timeout"]
