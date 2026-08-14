@@ -1,0 +1,136 @@
+extends Node2D
+
+
+@export var enemy_scene: PackedScene
+@export var upgrade_screen_scene: PackedScene = preload("res://scenes/ui/upgrade_screen.tscn")
+@export var spawn_distance_min := 600.0  # Minimum distance from player
+@export var spawn_distance_max := 800.0  # Maximum distance from player
+
+@onready var spawner := $EnemySpawner
+@onready var difficulty_manager: Node = get_node_or_null("DifficultyManager")
+@onready var upgrade_manager := $UpgradeManager
+@onready var player := $Player
+
+var upgrade_screen: CanvasLayer
+
+func _ready():
+	print("DifficultyManager:", difficulty_manager)
+	spawner.wait_time = 1.5
+	
+	# Setup upgrade system
+	print("🔧 Setting up upgrade system...")
+	print("  upgrade_screen_scene: ", upgrade_screen_scene)
+	
+	if upgrade_screen_scene == null:
+		push_error("❌ upgrade_screen_scene is not assigned in the Main scene!")
+		push_error("   Please assign res://scenes/ui/upgrade_screen.tscn in the Inspector")
+		return
+	
+	upgrade_screen = upgrade_screen_scene.instantiate()
+	if upgrade_screen == null:
+		push_error("❌ Failed to instantiate upgrade_screen!")
+		return
+	
+	add_child(upgrade_screen)
+	print("✅ Upgrade screen instantiated and added")
+	
+	if upgrade_screen.has_signal("upgrade_selected"):
+		upgrade_screen.upgrade_selected.connect(_on_upgrade_selected)
+		print("✅ Connected upgrade_selected signal")
+	else:
+		push_error("❌ upgrade_screen doesn't have upgrade_selected signal!")
+
+
+
+func _process(_delta):
+	if difficulty_manager == null:
+		return
+
+	var diff = difficulty_manager.difficulty
+	spawner.wait_time = max(0.3, 1.5 - diff * 0.1)
+
+
+
+func _on_enemy_spawner_timeout():
+	if enemy_scene == null:
+		return
+
+	var enemy = enemy_scene.instantiate()
+	add_child(enemy)
+
+	apply_difficulty(enemy)
+	enemy.global_position = get_random_spawn_position()
+
+
+func apply_difficulty(enemy):
+	var diff = difficulty_manager.difficulty
+
+	enemy.health = int(enemy.health * diff)
+	enemy.speed *= 1.0 + diff * 0.1
+
+
+func get_random_spawn_position() -> Vector2:
+	if player == null:
+		# Fallback if player not found
+		var radius = 700
+		var fallback_angle = randf() * TAU
+		return global_position + Vector2(cos(fallback_angle), sin(fallback_angle)) * radius
+	
+	var player_pos = player.global_position
+	var viewport = get_viewport()
+	
+	# Get viewport size (visible area)
+	var viewport_size = viewport.get_visible_rect().size
+	
+	# Calculate minimum safe distance to spawn outside viewport
+	# Use the larger dimension (width or height) plus a buffer
+	var viewport_diagonal = viewport_size.length()
+	var safe_distance = max(viewport_diagonal / 2.0, spawn_distance_min)
+	
+	# Clamp to max distance
+	safe_distance = min(safe_distance, spawn_distance_max)
+	
+	# Random angle around player (360 degrees)
+	var spawn_angle = randf() * TAU
+	
+	# Calculate spawn position at safe distance from player
+	var spawn_pos = player_pos + Vector2(cos(spawn_angle), sin(spawn_angle)) * safe_distance
+	
+	return spawn_pos
+
+
+func _on_player_level_up():
+	print("🎯 _on_player_level_up() called")
+	print("  upgrade_screen: ", upgrade_screen)
+	print("  upgrade_manager: ", upgrade_manager)
+	
+	if upgrade_screen == null:
+		push_error("❌ upgrade_screen is null!")
+		return
+	
+	if upgrade_manager == null:
+		push_error("❌ upgrade_manager is null!")
+		return
+	
+	var upgrades = upgrade_manager.get_random_upgrades(3)
+	print("  Got ", upgrades.size(), " upgrades")
+	upgrade_screen.show_upgrades(upgrades)
+	print("  Called show_upgrades()")
+
+func _on_upgrade_selected(upgrade):
+	print("🎁 _on_upgrade_selected() called")
+	print("  upgrade: ", upgrade)
+	print("  upgrade_manager: ", upgrade_manager)
+	print("  player: ", player)
+	
+	if upgrade_manager == null:
+		push_error("❌ upgrade_manager is null!")
+		return
+	
+	if player == null:
+		push_error("❌ player is null!")
+		return
+	
+	print("  Applying upgrade: ", upgrade.name)
+	upgrade_manager.apply_upgrade(upgrade, player)
+	print("✅ Applied upgrade: ", upgrade.name)
