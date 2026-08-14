@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal leveled_up
+
 @export var speed := 300.0
 @export var max_health := 10
 @export var xp_to_next_level := 5
@@ -130,17 +132,7 @@ func level_up():
 	xp_to_next_level = int(xp_to_next_level * 1.5)
 
 	print("🆙 LEVEL UP! Level:", level)
-	
-	# Notify main scene about level up
-	var main = get_tree().get_first_node_in_group("main")
-	if main != null:
-		if main.has_method("_on_player_level_up"):
-			print("✅ Calling main._on_player_level_up()")
-			main._on_player_level_up()
-		else:
-			print("❌ Main scene doesn't have _on_player_level_up method")
-	else:
-		print("❌ Main scene not found in 'main' group")
+	leveled_up.emit()
 
 
 func fire_projectile_weapon():

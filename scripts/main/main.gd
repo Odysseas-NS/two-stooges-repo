@@ -39,6 +39,9 @@ func _ready():
 		print("✅ Connected upgrade_selected signal")
 	else:
 		push_error("❌ upgrade_screen doesn't have upgrade_selected signal!")
+	
+	if player != null:
+		player.leveled_up.connect(_on_player_level_up)
 
 
 

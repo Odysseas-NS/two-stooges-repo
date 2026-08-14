@@ -51,7 +51,7 @@ func choose_new_target() -> void:
 	target_position = spawn_position + random_offset
 	update_animation("walk")
 
-func move_towards_target(delta: float) -> void:
+func move_towards_target(_delta: float) -> void:
 	var direction = (target_position - global_position).normalized()
 	velocity = direction * speed
 

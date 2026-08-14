@@ -26,7 +26,7 @@ func get_input():
 			$Sprite2D.flip_h = false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	get_input()
 	move_and_slide()
 
