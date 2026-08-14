@@ -111,32 +111,43 @@ func register_upgrades():
 			if player.weapon_manager != null:
 				player.weapon_manager.unlock_aoe_burst()
 	))
+	
+	available_upgrades.append(Upgrade.new(
+		"unlock_missile",
+		"Magic Missile",
+		"Periodic projectile that targets the closest enemy and deals high damage.",
+		func(player): 
+			if player.weapon_manager != null:
+				player.weapon_manager.unlock_missile()
+	))
 
 func get_random_upgrades(count: int = 3, player: Node = null) -> Array[Upgrade]:
-	# Separate weapon unlocks from regular upgrades
 	var weapon_upgrades: Array[Upgrade] = []
 	var regular_upgrades: Array[Upgrade] = []
 	
 	for upgrade in available_upgrades:
 		if upgrade.id.begins_with("unlock_"):
-			# Check if weapon is already unlocked
+			var weapon_id = upgrade.id.replace("unlock_", "")
 			if player != null and player.has_method("has_weapon"):
-				if not player.has_weapon(upgrade.id.replace("unlock_", "")):
+				if not player.has_weapon(weapon_id):
 					weapon_upgrades.append(upgrade)
 			else:
-				# If we can't check, assume not unlocked and add it
+				push_warning(
+					"UpgradeManager: player not provided; weapon unlock '%s' cannot be filtered"
+					% weapon_id
+				)
 				weapon_upgrades.append(upgrade)
 		else:
 			regular_upgrades.append(upgrade)
 	
 	var result: Array[Upgrade] = []
 	
-	# Priority 1: Add weapon unlocks first (if not already unlocked)
+	weapon_upgrades.shuffle()
 	for weapon_upgrade in weapon_upgrades:
-		if result.size() < count:
-			result.append(weapon_upgrade)
+		if result.size() >= count:
+			break
+		result.append(weapon_upgrade)
 	
-	# Priority 2: Fill remaining slots with random regular upgrades
 	if result.size() < count:
 		regular_upgrades.shuffle()
 		for upgrade in regular_upgrades:

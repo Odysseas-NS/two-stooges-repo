@@ -5,6 +5,7 @@ var player: Node2D
 
 @export var rotating_blade_scene: PackedScene = preload("res://scenes/weapons/rotating_blade.tscn")
 @export var aoe_burst_scene: PackedScene = preload("res://scenes/weapons/aoe_burst.tscn")
+@export var missile_scene: PackedScene = preload("res://scenes/weapons/missile.tscn")
 
 
 # Weapon data structure
@@ -81,6 +82,18 @@ func unlock_aoe_burst():
 		0.0
 	)
 	weapon.weapon_node = aoe_instance
+	add_weapon(weapon)
+	
+func unlock_missile():
+	if get_weapon("missile") != null:
+		return  # Already unlocked
+	
+	var weapon = Weapon.new(
+		"missile",
+		"Magic Missile",
+		"fire_missile_weapon",
+		1.5
+	)
 	add_weapon(weapon)
 
 func enable_weapon(weapon_id: String):

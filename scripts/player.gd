@@ -62,6 +62,22 @@ func move_player(_delta):
 
 	velocity = direction.normalized() * speed
 	move_and_slide()
+	
+		# Handle animations based on movement
+	if velocity.length() == 0:
+		# Not moving - play idle animation
+		update_animation("idle")
+	else:
+		# Moving - determine direction and play appropriate animation
+		if abs(velocity.x) > abs(velocity.y):
+			# Horizontal movement (left or right)
+			update_animation("right")
+			# Flip sprite for left movement
+			$Sprite2D.flip_h = velocity.x < 0
+		else:
+			# Vertical movement (up or down) - use right animation
+			update_animation("right")
+			$Sprite2D.flip_h = false
 
 
 func perform_attack():
@@ -143,10 +159,29 @@ func fire_projectile_weapon():
 	var projectile_direction = (target.global_position - global_position).normalized()
 	projectile.direction = projectile_direction
 
+func fire_missile_weapon():
+	if weapon_manager == null or weapon_manager.missile_scene == null:
+		return
+
+	var target = get_nearest_enemy()
+	if target == null:
+		return
+
+	var missile = weapon_manager.missile_scene.instantiate()
+	get_parent().add_child(missile)
+	missile.global_position = global_position
+	missile.direction = (target.global_position - global_position).normalized()
+
 func has_weapon(weapon_id: String) -> bool:
 	if weapon_manager == null:
 		return false
 	return weapon_manager.has_weapon(weapon_id)
+
+# Function to call for animations
+func update_animation(animation):
+	# Get the AnimationPlayer from node (Orc node)
+	get_node("AnimationPlayer").play(animation)
+
 
 
 func get_nearest_enemy():

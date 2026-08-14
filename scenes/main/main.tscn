@@ -1,15 +1,22 @@
-[gd_scene load_steps=7 format=3 uid="uid://be7k5ypbb0km0"]
+[gd_scene load_steps=9 format=3 uid="uid://be7k5ypbb0km0"]
 
 [ext_resource type="PackedScene" uid="uid://d1w5ccem33kle" path="res://scenes/player/player.tscn" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main.gd" id="1_iuonh"]
 [ext_resource type="PackedScene" uid="uid://drhkcd78218ty" path="res://scenes/enemy/enemy.tscn" id="2_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="3_hujxm"]
 [ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/difficulty_manager.gd" id="4_l3cfh"]
-[ext_resource type="Texture2D" uid="uid://caqfk2xng5v5u" path="res://trees/pine_tree.png" id="6_ow5a4"]
 [ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/upgrade_manager.gd" id="6_upgrade_mgr"]
+[ext_resource type="Texture2D" uid="uid://cva03kvexvhgq" path="res://assets/map/Bushes.png" id="7_yyfjg"]
+[ext_resource type="Texture2D" uid="uid://bv38s24p4kmq2" path="res://assets/map/Tree.png" id="8_b1x3f"]
 
 [node name="Main" type="Node2D" groups=["main"]]
 script = ExtResource("1_iuonh")
 enemy_scene = ExtResource("2_k2fmo")
+
+[node name="Map" parent="." instance=ExtResource("3_hujxm")]
+z_index = 1
+texture_repeat = 2
+position = Vector2(-988.00006, -742)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -1
@@ -19,9 +26,11 @@ offset_left = -526.0
 offset_top = -348.0
 offset_right = 4538.3984
 offset_bottom = 2518.0
-color = Color(0, 0.5622662, 9.62615e-07, 1)
+color = Color(0.46314383, 0.4551832, 0.4895652, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_hyk8p")]
+z_index = 10
 position = Vector2(1838, 996)
 
 [node name="EnemySpawner" type="Timer" parent="."]
@@ -68,44 +77,44 @@ text = "GAME OVER NIGGA"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="PineTree" type="Sprite2D" parent="."]
-position = Vector2(563, 688.00006)
-scale = Vector2(0.2890625, 0.3223684)
-texture = ExtResource("6_ow5a4")
+[node name="Bushes" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(698, 1691)
+texture = ExtResource("7_yyfjg")
 
-[node name="PineTree2" type="Sprite2D" parent="."]
-position = Vector2(679.00006, 514)
-scale = Vector2(0.3984375, 0.38157895)
-texture = ExtResource("6_ow5a4")
+[node name="Tree" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1140, 2195)
+texture = ExtResource("8_b1x3f")
 
-[node name="PineTree3" type="Sprite2D" parent="."]
-position = Vector2(740, 826)
-scale = Vector2(0.3125, 0.35526314)
-texture = ExtResource("6_ow5a4")
+[node name="Tree2" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1183, 1469)
+texture = ExtResource("8_b1x3f")
 
-[node name="PineTree4" type="Sprite2D" parent="."]
-position = Vector2(805.00006, 405.00003)
-scale = Vector2(0.2695311, 0.34210533)
-texture = ExtResource("6_ow5a4")
+[node name="Tree3" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(2326, 1426)
+texture = ExtResource("8_b1x3f")
 
-[node name="PineTree5" type="Sprite2D" parent="."]
-position = Vector2(1057, 406)
-scale = Vector2(0.296875, 0.29605263)
-texture = ExtResource("6_ow5a4")
+[node name="Tree4" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(3414, 1003)
+texture = ExtResource("8_b1x3f")
 
-[node name="PineTree6" type="Sprite2D" parent="."]
-position = Vector2(1132, 591)
-scale = Vector2(0.2734375, 0.23684211)
-texture = ExtResource("6_ow5a4")
+[node name="Bushes2" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1120, 1009)
+texture = ExtResource("7_yyfjg")
 
-[node name="PineTree7" type="Sprite2D" parent="."]
-position = Vector2(889, 766)
-scale = Vector2(0.3984375, 0.31578946)
-texture = ExtResource("6_ow5a4")
+[node name="Bushes3" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(1779, 1279)
+texture = ExtResource("7_yyfjg")
 
-[node name="PineTree8" type="Sprite2D" parent="."]
-position = Vector2(1041, 763)
-scale = Vector2(0.3046875, 0.26973686)
-texture = ExtResource("6_ow5a4")
+[node name="Bushes4" type="Sprite2D" parent="."]
+z_index = 3
+position = Vector2(2587, 683)
+texture = ExtResource("7_yyfjg")
 
 [connection signal="timeout" from="EnemySpawner" to="." method="_on_enemy_spawner_timeout"]

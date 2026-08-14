@@ -112,7 +112,7 @@ func _on_player_level_up():
 		push_error("❌ upgrade_manager is null!")
 		return
 	
-	var upgrades = upgrade_manager.get_random_upgrades(3)
+	var upgrades = upgrade_manager.get_random_upgrades(3, player)
 	print("  Got ", upgrades.size(), " upgrades")
 	upgrade_screen.show_upgrades(upgrades)
 	print("  Called show_upgrades()")
