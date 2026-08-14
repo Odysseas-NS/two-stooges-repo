@@ -1,5 +1,7 @@
 extends CharacterBody2D
 
+signal defeated
+
 @export var speed: float = 150.0
 @export var health: int = 3
 @export var damage := 1
@@ -21,6 +23,7 @@ func _physics_process(_delta):
 func take_damage(amount: int):
 	health -= amount
 	if health <= 0:
+		defeated.emit()
 		drop_xp()
 		queue_free()
 

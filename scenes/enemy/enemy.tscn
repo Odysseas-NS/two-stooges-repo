@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://drhkcd78218ty"]
 
-[ext_resource type="Script" uid="uid://dqeg4xxytcyd3" path="res://scripts/enemy.gd" id="1_4a83h"]
+[ext_resource type="Script" uid="uid://dqeg4xxytcyd3" path="res://scripts/enemies/enemy.gd" id="1_4a83h"]
 [ext_resource type="PackedScene" uid="uid://dl15rqymreh3c" path="res://scenes/xp/xp_gem.tscn" id="2_a3pup"]
 [ext_resource type="Texture2D" uid="uid://c06v2v4ptwfrf" path="res://assets/npcs/enemies/Soldier-Idle.png" id="3_40wdo"]
 

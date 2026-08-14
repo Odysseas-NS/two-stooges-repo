@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://c8gamehud001"]
+
+[ext_resource type="Script" uid="uid://m6pahekj34xs" path="res://scripts/misc/game_hud.gd" id="1_hud"]
+
+[node name="GameHUD" type="CanvasLayer"]
+layer = 5
+script = ExtResource("1_hud")
+
+[node name="XPBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 14.0
+grow_horizontal = 2
+max_value = 5.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 18.0
+offset_right = 60.0
+offset_bottom = 42.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 18
+text = "Level 1"
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="."]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 18.0
+offset_right = 160.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 18
+text = "00:00"
+
+[node name="KillLabel" type="Label" parent="."]
+unique_name_in_owner = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -160.0
+offset_top = 18.0
+offset_right = -16.0
+offset_bottom = 42.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 18
+text = "Kills: 0"
+horizontal_alignment = 2
+
+[node name="HPBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(64, 8)
+offset_right = 64.0
+offset_bottom = 8.0
+max_value = 10.0
+value = 10.0
+show_percentage = false
