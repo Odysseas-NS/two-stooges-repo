@@ -1,40 +1,99 @@
-[gd_scene load_steps=2 format=3 uid="uid://bq8x7k3m4n5p6"]
+[gd_scene load_steps=4 format=3 uid="uid://bq8x7k3m4n5p6"]
 
-[ext_resource type="Script" uid="uid://ds0exb4x4xlam" path="res://scripts/upgrade_screen.gd" id="1_upgrade"]
+[ext_resource type="Script" path="res://scripts/misc/upgrade_screen.gd" id="1_upgrade"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.12, 0.08, 0.22, 0.96)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.78, 0.64, 0.24, 1)
+content_margin_left = 28
+content_margin_top = 24
+content_margin_right = 28
+content_margin_bottom = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ornament"]
+bg_color = Color(0.78, 0.64, 0.24, 1)
 
 [node name="UpgradeScreen" type="CanvasLayer"]
+layer = 10
 process_mode = 3
 script = ExtResource("1_upgrade")
 
-[node name="UpgradePanel" type="Panel" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -250.0
-offset_top = -200.0
-offset_right = 250.0
-offset_bottom = 200.0
+[node name="DimOverlay" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.55)
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="UpgradePanel"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -150.0
-offset_right = 200.0
-offset_bottom = 150.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Title" type="Label" parent="UpgradePanel/VBoxContainer"]
+[node name="MainFrame" type="Control" parent="CenterContainer"]
+custom_minimum_size = Vector2(620, 560)
 layout_mode = 2
-text = "LEVEL UP! Choose an Upgrade:"
+
+[node name="LeftOrnament" type="Panel" parent="CenterContainer/MainFrame"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 220.0
+offset_right = 6.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ornament")
+
+[node name="RightOrnament" type="Panel" parent="CenterContainer/MainFrame"]
+layout_mode = 0
+offset_left = 604.0
+offset_top = 220.0
+offset_right = 620.0
+offset_bottom = 300.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_ornament")
+
+[node name="UpgradePanel" type="PanelContainer" parent="CenterContainer/MainFrame"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/MainFrame/UpgradePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MainFrame/UpgradePanel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="CenterContainer/MainFrame/UpgradePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.96, 0.96, 1)
+theme_override_font_sizes/font_size = 34
+text = "Level Up!"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="OptionsContainer" type="VBoxContainer" parent="CenterContainer/MainFrame/UpgradePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 12
+
+[node name="Footer" type="Label" parent="CenterContainer/MainFrame/UpgradePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.72, 0.76, 1)
+theme_override_font_sizes/font_size = 15
+text = "Choose an upgrade to continue"
+horizontal_alignment = 1
+autowrap_mode = 2
