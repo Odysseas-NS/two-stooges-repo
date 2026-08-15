@@ -37,7 +37,7 @@ class Weapon:
 		fire_method = p_fire_method
 		cooldown = p_cooldown
 	
-	func update(delta: float, player: Node2D):
+	func update(delta: float, player: Node2D, manager: Node2D):
 		if not enabled:
 			return
 		
@@ -50,7 +50,19 @@ class Weapon:
 		if timer <= 0:
 			if player != null and player.has_method(fire_method):
 				player.call(fire_method)
-			timer = cooldown
+			if manager.has_method("get_effective_cooldown"):
+				timer = manager.get_effective_cooldown(cooldown, id, player)
+			else:
+				timer = cooldown
+
+
+func get_effective_cooldown(base_cooldown: float, weapon_id: String, player: Node2D) -> float:
+	var cooldown: float = base_cooldown
+	if player != null and weapon_id == "axe" and "fire_rate" in player:
+		cooldown = float(player.fire_rate)
+	if player != null and "cooldown_reduction" in player:
+		cooldown *= 1.0 - float(player.cooldown_reduction)
+	return maxf(0.1, cooldown)
 
 
 func _ready():
@@ -58,7 +70,7 @@ func _ready():
 
 func _process(delta):
 	for weapon in weapons:
-		weapon.update(delta, player)
+		weapon.update(delta, player, self)
 
 func add_weapon(weapon: Weapon) -> bool:
 	if get_weapon(weapon.id) != null:

@@ -9,7 +9,7 @@ extends Node2D
 @export var spawn_distance_max := 800.0  # Maximum distance from player
 
 @onready var spawner := $EnemySpawner
-@onready var difficulty_manager: Node = get_node_or_null("DifficultyManager")
+@onready var difficulty_manager = $DifficultyManager
 @onready var upgrade_manager := $UpgradeManager
 @onready var player := $Player
 
@@ -46,7 +46,8 @@ func _ready():
 	
 	if player != null:
 		player.leveled_up.connect(_on_player_level_up)
-	
+		player.died.connect(_on_player_died)
+
 	game_hud = game_hud_scene.instantiate()
 	add_child(game_hud)
 	if game_hud.has_method("setup") and player != null:
@@ -57,14 +58,17 @@ func _ready():
 	if pause_screen.has_method("setup"):
 		pause_screen.setup(upgrade_screen, %GameOver)
 
+	if %GameOver.has_method("setup"):
+		%GameOver.setup(player)
+
 
 
 func _process(_delta):
 	if difficulty_manager == null:
 		return
 
-	var diff = difficulty_manager.difficulty
-	spawner.wait_time = max(0.3, 1.5 - diff * 0.1)
+	var diff := get_total_difficulty()
+	spawner.wait_time = max(0.2, 1.5 - diff * 0.1)
 
 
 
@@ -83,10 +87,27 @@ func _on_enemy_spawner_timeout():
 
 
 func apply_difficulty(enemy):
-	var diff = difficulty_manager.difficulty
+	var diff := get_total_difficulty()
 
 	enemy.health = int(enemy.health * diff)
 	enemy.speed *= 1.0 + diff * 0.1
+	if "damage" in enemy:
+		enemy.damage = maxi(1, int(enemy.damage * (1.0 + diff * 0.08)))
+
+
+func get_total_difficulty() -> float:
+	if difficulty_manager == null:
+		return 1.0
+
+	var diff: float = difficulty_manager.difficulty
+	if player != null and "difficulty_bonus" in player:
+		diff += float(player.difficulty_bonus)
+	return diff
+
+
+func _on_player_died() -> void:
+	if %GameOver.has_method("show_game_over") and player != null:
+		%GameOver.show_game_over(player.revives_remaining > 0)
 
 
 func get_random_spawn_position() -> Vector2:

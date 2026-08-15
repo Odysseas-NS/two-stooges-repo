@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://be7k5ypbb0km0"]
+[gd_scene load_steps=11 format=3 uid="uid://be7k5ypbb0km0"]
 
 [ext_resource type="PackedScene" uid="uid://d1w5ccem33kle" path="res://scenes/player/player.tscn" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main/main.gd" id="1_iuonh"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="3_hujxm"]
 [ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/managers/difficulty_manager.gd" id="4_l3cfh"]
 [ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/managers/upgrade_manager.gd" id="6_upgrade_mgr"]
+[ext_resource type="Script" path="res://scripts/misc/game_over.gd" id="7_game_over"]
 [ext_resource type="Texture2D" uid="uid://cva03kvexvhgq" path="res://assets/map/Bushes.png" id="7_yyfjg"]
 [ext_resource type="Texture2D" uid="uid://bv38s24p4kmq2" path="res://assets/map/Tree.png" id="8_b1x3f"]
 
@@ -47,37 +48,52 @@ script = ExtResource("6_upgrade_mgr")
 [node name="GameOver" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 visible = false
+process_mode = 3
+script = ExtResource("7_game_over")
 
 [node name="ColorRect" type="ColorRect" parent="GameOver"]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -64.012085
-offset_top = -46.0
-offset_right = 64.01221
-offset_bottom = 46.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.827451)
 
-[node name="Label" type="Label" parent="GameOver/ColorRect"]
+[node name="VBoxContainer" type="VBoxContainer" parent="GameOver/ColorRect"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -162.1333
-offset_top = -36.0
-offset_right = 162.1333
-offset_bottom = 36.0
+offset_left = -220.0
+offset_top = -160.0
+offset_right = 220.0
+offset_bottom = 160.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0.77157766, 2.2862107e-06, 1.0588765e-06, 1)
-theme_override_font_sizes/font_size = 160
-text = "GAME OVER NIGGA"
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="Title" type="Label" parent="GameOver/ColorRect/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.24, 0.24, 1)
+theme_override_font_sizes/font_size = 72
+text = "GAME OVER"
 horizontal_alignment = 1
-vertical_alignment = 1
+
+[node name="ReviveButton" type="Button" parent="GameOver/ColorRect/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Revive"
+
+[node name="QuitButton" type="Button" parent="GameOver/ColorRect/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit to Menu"
+
+[connection signal="pressed" from="GameOver/ColorRect/VBoxContainer/ReviveButton" to="GameOver" method="_on_revive_button_pressed"]
+[connection signal="pressed" from="GameOver/ColorRect/VBoxContainer/QuitButton" to="GameOver" method="_on_quit_button_pressed"]
 
 [node name="Bushes" type="Sprite2D" parent="."]
 z_index = 3

@@ -1,6 +1,7 @@
 extends CharacterBody2D
 
 signal leveled_up
+signal died
 
 @export var speed := 300.0
 @export var max_health := 10
@@ -16,10 +17,21 @@ var health := max_health
 var invincible := false
 var attack_timer := 0.0
 var xp_gain_bonus := 0
+var is_dead := false
 
-# Upgrade stats
+var _regen_buffer := 0.0
+
+# Permanent upgrade stats
 var projectile_damage := 1
 var axe_speed_boost := 0.0
+var gold_gain_bonus := 0
+var cooldown_reduction := 0.0
+var difficulty_bonus := 0.0
+var pickup_range := 0.0
+var armor := 0
+var health_regen := 0.0
+var projectile_count := 1
+var revives_remaining := 0
 
 # Weapon manager
 @onready var weapon_manager := $WeaponManager
@@ -43,11 +55,20 @@ func setup_weapons():
 
 
 func _physics_process(delta: float) -> void:
+	if is_dead:
+		return
+
 	move_player(delta)
 	attack_timer -= delta
 
 	if attack_timer <= 0:
 		perform_attack()
+
+	if health_regen > 0.0 and health < max_health:
+		_regen_buffer += health_regen * delta
+		while _regen_buffer >= 1.0 and health < max_health:
+			health += 1
+			_regen_buffer -= 1.0
 
 
 func move_player(_delta):
@@ -64,19 +85,13 @@ func move_player(_delta):
 	velocity = direction.normalized() * speed
 	move_and_slide()
 	
-		# Handle animations based on movement
 	if velocity.length() == 0:
-		# Not moving - play idle animation
 		update_animation("idle")
 	else:
-		# Moving - determine direction and play appropriate animation
 		if abs(velocity.x) > abs(velocity.y):
-			# Horizontal movement (left or right)
 			update_animation("right")
-			# Flip sprite for left movement
 			$Sprite2D.flip_h = velocity.x < 0
 		else:
-			# Vertical movement (up or down) - use right animation
 			update_animation("right")
 			$Sprite2D.flip_h = false
 
@@ -92,10 +107,11 @@ func perform_attack():
 
 
 func take_damage(amount: int):
-	if invincible:
+	if invincible or is_dead:
 		return
 
-	health -= amount
+	var reduced := maxi(1, amount - armor)
+	health -= reduced
 	print("Player HP:", health)
 
 	if health <= 0:
@@ -111,10 +127,22 @@ func start_invincibility():
 
 
 func die():
+	if is_dead:
+		return
+
+	is_dead = true
 	print("💀 Player died")
-	queue_free()
-	%GameOver.visible = true
-	get_tree().paused = true
+	visible = false
+	weapon_manager.set_process(false)
+	died.emit()
+
+
+func revive():
+	is_dead = false
+	health = max_health
+	visible = true
+	weapon_manager.set_process(true)
+	start_invincibility()
 
 
 func gain_xp(amount: int):
@@ -135,13 +163,16 @@ func level_up():
 
 
 func fire_axe_weapon():
-	var axe = axe_scene.instantiate()
-	get_parent().add_child(axe)
-	weapon_manager.apply_projectile_damage(axe, projectile_damage)
-	axe.launch_speed += axe_speed_boost
-
 	var facing := -1 if $Sprite2D.flip_h else 1
-	axe.launch(global_position, facing)
+	for i in range(projectile_count):
+		var axe = axe_scene.instantiate()
+		get_parent().add_child(axe)
+		weapon_manager.apply_projectile_damage(axe, projectile_damage)
+		axe.launch_speed += axe_speed_boost
+
+		var spread_offset := Vector2((i - (projectile_count - 1) * 0.5) * 14.0, 0.0)
+		axe.launch(global_position + spread_offset, facing)
+
 
 func fire_magic_missile_weapon():
 	if weapon_manager == null or weapon_manager.magic_missile_scene == null:
@@ -151,22 +182,20 @@ func fire_magic_missile_weapon():
 	if target == null:
 		return
 
-	var missile = weapon_manager.magic_missile_scene.instantiate()
-	get_parent().add_child(missile)
-	weapon_manager.apply_projectile_damage(missile, projectile_damage)
-	missile.global_position = global_position
-	missile.direction = (target.global_position - global_position).normalized()
+	for i in range(projectile_count):
+		var missile = weapon_manager.magic_missile_scene.instantiate()
+		get_parent().add_child(missile)
+		weapon_manager.apply_projectile_damage(missile, projectile_damage)
+		missile.global_position = global_position + Vector2((i - (projectile_count - 1) * 0.5) * 10.0, 0.0)
+		missile.direction = (target.global_position - global_position).normalized()
 
 func has_weapon(weapon_id: String) -> bool:
 	if weapon_manager == null:
 		return false
 	return weapon_manager.has_weapon(weapon_id)
 
-# Function to call for animations
 func update_animation(animation):
-	# Get the AnimationPlayer from node (Orc node)
 	get_node("AnimationPlayer").play(animation)
-
 
 
 func get_nearest_enemy():

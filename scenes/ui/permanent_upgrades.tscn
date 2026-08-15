@@ -3,10 +3,10 @@
 [ext_resource type="Script" path="res://scripts/misc/permanent_upgrades.gd" id="1_perm"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
-content_margin_left = 36.0
-content_margin_top = 32.0
-content_margin_right = 36.0
-content_margin_bottom = 32.0
+content_margin_left = 28.0
+content_margin_top = 24.0
+content_margin_right = 28.0
+content_margin_bottom = 24.0
 bg_color = Color(0.12, 0.08, 0.22, 0.96)
 border_width_left = 4
 border_width_top = 4
@@ -32,31 +32,38 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.08, 0.06, 0.14, 1)
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/margin_left = 48
+theme_override_constants/margin_top = 32
+theme_override_constants/margin_right = 48
+theme_override_constants/margin_bottom = 32
 
-[node name="MenuPanel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(720, 620)
+[node name="MenuPanel" type="PanelContainer" parent="MarginContainer"]
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MenuPanel"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/MenuPanel"]
 layout_mode = 2
-theme_override_constants/separation = 16
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="CenterContainer/MenuPanel/VBoxContainer"]
+[node name="Title" type="Label" parent="MarginContainer/MenuPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.96, 0.96, 0.96, 1)
 theme_override_font_sizes/font_size = 36
 text = "Permanent Upgrades"
 horizontal_alignment = 1
 
-[node name="CoinsLabel" type="Label" parent="CenterContainer/MenuPanel/VBoxContainer"]
+[node name="CoinsLabel" type="Label" parent="MarginContainer/MenuPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_colors/font_color = Color(0.92, 0.78, 0.28, 1)
@@ -64,28 +71,31 @@ theme_override_font_sizes/font_size = 20
 text = "Coins: 0"
 horizontal_alignment = 1
 
-[node name="UpgradesList" type="VBoxContainer" parent="CenterContainer/MenuPanel/VBoxContainer"]
+[node name="UpgradesGrid" type="GridContainer" parent="MarginContainer/MenuPanel/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+size_flags_horizontal = 3
 size_flags_vertical = 3
-theme_override_constants/separation = 12
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 4
 
-[node name="FooterButtons" type="HBoxContainer" parent="CenterContainer/MenuPanel/VBoxContainer"]
+[node name="FooterButtons" type="HBoxContainer" parent="MarginContainer/MenuPanel/VBoxContainer"]
 layout_mode = 2
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="BackButton" type="Button" parent="CenterContainer/MenuPanel/VBoxContainer/FooterButtons"]
+[node name="BackButton" type="Button" parent="MarginContainer/MenuPanel/VBoxContainer/FooterButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "Back"
 
-[node name="RefundAllButton" type="Button" parent="CenterContainer/MenuPanel/VBoxContainer/FooterButtons"]
+[node name="RefundAllButton" type="Button" parent="MarginContainer/MenuPanel/VBoxContainer/FooterButtons"]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(180, 0)
 layout_mode = 2
 text = "Refund All"
 
-[connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/FooterButtons/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/FooterButtons/RefundAllButton" to="." method="_on_refund_all_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MenuPanel/VBoxContainer/FooterButtons/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="MarginContainer/MenuPanel/VBoxContainer/FooterButtons/RefundAllButton" to="." method="_on_refund_all_button_pressed"]
