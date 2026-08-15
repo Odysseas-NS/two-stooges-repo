@@ -7,7 +7,7 @@ signal leveled_up
 @export var xp_to_next_level := 5
 @export var attack_damage: int = 1
 @export var attack_cooldown: float = 1.0
-@export var projectile_scene: PackedScene
+@export var axe_scene: PackedScene
 @export var fire_rate := 0.8
 
 var level := 1
@@ -19,7 +19,7 @@ var xp_gain_bonus := 0
 
 # Upgrade stats
 var projectile_damage := 1
-var projectile_speed_boost := 0.0
+var axe_speed_boost := 0.0
 
 # Weapon manager
 @onready var weapon_manager := $WeaponManager
@@ -33,15 +33,13 @@ func setup_weapons():
 	if weapon_manager == null:
 		return
 	
-	# Create projectile weapon (default, always enabled)
-	# Pass method name as string instead of Callable
-	var projectile_weapon = weapon_manager.Weapon.new(
-		"projectile",
-		"Magic Bolt",
-		"fire_projectile_weapon",
+	var axe_weapon = weapon_manager.Weapon.new(
+		"axe",
+		"Axe",
+		"fire_axe_weapon",
 		fire_rate
 	)
-	weapon_manager.add_weapon(projectile_weapon)
+	weapon_manager.add_weapon(axe_weapon)
 
 
 func _physics_process(delta: float) -> void:
@@ -136,32 +134,26 @@ func level_up():
 	leveled_up.emit()
 
 
-func fire_projectile_weapon():
-	var target = get_nearest_enemy()
-	if target == null:
-		return
+func fire_axe_weapon():
+	var axe = axe_scene.instantiate()
+	get_parent().add_child(axe)
+	weapon_manager.apply_projectile_damage(axe, projectile_damage)
+	axe.launch_speed += axe_speed_boost
 
-	var projectile = projectile_scene.instantiate()
-	get_parent().add_child(projectile)
-	projectile.global_position = global_position
-	
-	# Apply upgrade stats to projectile
-	projectile.damage = projectile_damage
-	projectile.speed += projectile_speed_boost
+	var facing := -1 if $Sprite2D.flip_h else 1
+	axe.launch(global_position, facing)
 
-	var projectile_direction = (target.global_position - global_position).normalized()
-	projectile.direction = projectile_direction
-
-func fire_missile_weapon():
-	if weapon_manager == null or weapon_manager.missile_scene == null:
+func fire_magic_missile_weapon():
+	if weapon_manager == null or weapon_manager.magic_missile_scene == null:
 		return
 
 	var target = get_nearest_enemy()
 	if target == null:
 		return
 
-	var missile = weapon_manager.missile_scene.instantiate()
+	var missile = weapon_manager.magic_missile_scene.instantiate()
 	get_parent().add_child(missile)
+	weapon_manager.apply_projectile_damage(missile, projectile_damage)
 	missile.global_position = global_position
 	missile.direction = (target.global_position - global_position).normalized()
 

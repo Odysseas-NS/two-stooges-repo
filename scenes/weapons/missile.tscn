@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://icanbyedsvah"]
 
-[ext_resource type="Script" uid="uid://cke0nul2iq4gd" path="res://scripts/missile.gd" id="1_s66l8"]
+[ext_resource type="Script" uid="uid://cke0nul2iq4gd" path="res://scripts/weapons/missile.gd" id="1_s66l8"]
 [ext_resource type="Texture2D" uid="uid://box7mm3oqwd6v" path="res://assets/weapons/missile.png" id="2_dhosa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e40un"]

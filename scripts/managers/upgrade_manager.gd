@@ -85,12 +85,12 @@ func register_upgrades():
 			player.health += 10
 	))
 	
-	# Projectile upgrades (future: multiple projectiles)
+	# Axe upgrades
 	available_upgrades.append(Upgrade.new(
-		"projectile_speed",
-		"Swift Projectiles",
-		"Increase projectile speed by 200",
-		func(player): player.projectile_speed_boost += 200.0
+		"axe_speed",
+		"Swift Axe",
+		"Increase axe throw speed by 200",
+		func(player): player.axe_speed_boost += 200.0
 	))
 	
 	# Weapon unlocks (these have priority in upgrade selection)
@@ -113,12 +113,12 @@ func register_upgrades():
 	))
 	
 	available_upgrades.append(Upgrade.new(
-		"unlock_missile",
+		"unlock_magic_missile",
 		"Magic Missile",
-		"Periodic projectile that targets the closest enemy and deals high damage.",
+		"Periodic homing bolt that targets the closest enemy and deals high damage.",
 		func(player): 
 			if player.weapon_manager != null:
-				player.weapon_manager.unlock_missile()
+				player.weapon_manager.unlock_magic_missile()
 	))
 
 func get_random_upgrades(count: int = 3, player: Node = null) -> Array[Upgrade]:

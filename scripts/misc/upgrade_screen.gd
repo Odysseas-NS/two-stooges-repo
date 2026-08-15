@@ -125,7 +125,7 @@ func _icon_text_for_upgrade(upgrade) -> String:
 		return "»"
 	if upgrade.id.contains("health"):
 		return "♥"
-	if upgrade.id.contains("projectile"):
+	if upgrade.id.contains("projectile") or upgrade.id == "axe_speed":
 		return "•"
 	return upgrade.name.substr(0, 1)
 
@@ -141,7 +141,7 @@ func _icon_color_for_upgrade(upgrade) -> Color:
 		return Color(0.18, 0.45, 0.22)
 	if upgrade.id.contains("health"):
 		return Color(0.52, 0.18, 0.32)
-	if upgrade.id.contains("projectile"):
+	if upgrade.id.contains("projectile") or upgrade.id == "axe_speed":
 		return Color(0.18, 0.32, 0.55)
 	return ICON_BG
 

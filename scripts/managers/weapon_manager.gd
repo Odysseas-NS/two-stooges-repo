@@ -5,18 +5,20 @@ signal weapons_changed
 const MAX_WEAPONS := 6
 
 const WEAPON_ICONS := {
-	"projectile": "res://assets/weapons/axe.png",
+	"axe": "res://assets/weapons/axe.png",
 	"rotating_blade": "res://assets/weapons/blade.png",
 	"aoe_burst": "res://assets/weapons/aura.png",
-	"missile": "res://assets/weapons/missile.png",
+	"magic_missile": "res://assets/weapons/missile.png",
 }
+
+const PROJECTILE_WEAPON_IDS: Array[String] = ["axe", "magic_missile"]
 
 var weapons: Array[Weapon] = []
 var player: Node2D
 
 @export var rotating_blade_scene: PackedScene = preload("res://scenes/weapons/rotating_blade.tscn")
 @export var aoe_burst_scene: PackedScene = preload("res://scenes/weapons/aoe_burst.tscn")
-@export var missile_scene: PackedScene = preload("res://scenes/weapons/missile.tscn")
+@export var magic_missile_scene: PackedScene = preload("res://scenes/weapons/missile.tscn")
 
 
 # Weapon data structure
@@ -43,7 +45,7 @@ class Weapon:
 		if weapon_node != null:
 			return
 		
-		# For fire-once weapons (projectiles)
+		# For fire-once weapons (axe, magic missile)
 		timer -= delta
 		if timer <= 0:
 			if player != null and player.has_method(fire_method):
@@ -74,6 +76,13 @@ func add_weapon(weapon: Weapon) -> bool:
 
 func get_weapon_icon(weapon_id: String) -> String:
 	return WEAPON_ICONS.get(weapon_id, "")
+
+func is_projectile_weapon(weapon_id: String) -> bool:
+	return weapon_id in PROJECTILE_WEAPON_IDS
+
+func apply_projectile_damage(projectile: Area2D, projectile_damage: int) -> void:
+	var base_damage: int = projectile.get("damage")
+	projectile.set("damage", base_damage + projectile_damage - 1)
 
 func unlock_rotating_blade():
 	if get_weapon("rotating_blade") != null:
@@ -107,14 +116,14 @@ func unlock_aoe_burst():
 	weapon.weapon_node = aoe_instance
 	add_weapon(weapon)
 	
-func unlock_missile():
-	if get_weapon("missile") != null:
+func unlock_magic_missile():
+	if get_weapon("magic_missile") != null:
 		return  # Already unlocked
 	
 	var weapon = Weapon.new(
-		"missile",
+		"magic_missile",
 		"Magic Missile",
-		"fire_missile_weapon",
+		"fire_magic_missile_weapon",
 		1.5
 	)
 	add_weapon(weapon)
