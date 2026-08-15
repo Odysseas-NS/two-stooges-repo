@@ -1,19 +1,19 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6xgshkidi0f5"]
 
-[ext_resource type="Script" uid="uid://cywtshi3tgrva" path="res://scripts/rotating_blade.gd" id="1_rotating"]
+[ext_resource type="Script" uid="uid://cywtshi3tgrva" path="res://scripts/weapons/rotating_blade.gd" id="1_rotating"]
 [ext_resource type="Texture2D" uid="uid://c43suqf8pv6o7" path="res://assets/weapons/blade.png" id="2_enlqn"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_abao6"]
-radius = 16.0
-height = 63.0
+radius = 27.0
+height = 120.0
 
 [node name="RotatingBlade" type="Node2D"]
 script = ExtResource("1_rotating")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 modulate = Color(1, 0.3, 0.3, 1)
-position = Vector2(2, 12)
-scale = Vector2(0.3, 0.3)
+position = Vector2(3, 14)
+scale = Vector2(0.55, 0.55)
 texture = ExtResource("2_enlqn")
 
 [node name="Hitbox" type="Area2D" parent="."]
@@ -21,6 +21,6 @@ collision_layer = 16
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
-position = Vector2(1, -1)
+position = Vector2(1, -8)
 shape = SubResource("CapsuleShape2D_abao6")
 debug_color = Color(0.4142528, 0.60243684, 0.18381658, 0.41960785)
