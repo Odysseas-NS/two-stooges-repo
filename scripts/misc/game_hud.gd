@@ -59,6 +59,7 @@ func _update_hp_bar_position() -> void:
 
 func _format_time(seconds: float) -> String:
 	var total_seconds := int(seconds)
+	@warning_ignore("integer_division")
 	var minutes := total_seconds / 60
 	var secs := total_seconds % 60
 	return "%02d:%02d" % [minutes, secs]
