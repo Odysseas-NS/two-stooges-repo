@@ -1,6 +1,7 @@
 extends Control
 
 const GAME_SCENE := "res://scenes/main/main.tscn"
+const UPGRADES_SCENE := "res://scenes/ui/permanent_upgrades.tscn"
 
 const PANEL_BG := Color(0.12, 0.08, 0.22, 0.96)
 const PANEL_BORDER := Color(0.78, 0.64, 0.24)
@@ -71,7 +72,7 @@ func _on_options_button_pressed() -> void:
 
 
 func _on_upgrades_button_pressed() -> void:
-	_show_placeholder("Permanent upgrades coming soon!")
+	get_tree().change_scene_to_file(UPGRADES_SCENE)
 
 
 func _on_quit_button_pressed() -> void:

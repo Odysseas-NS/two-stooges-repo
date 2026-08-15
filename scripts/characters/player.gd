@@ -15,6 +15,7 @@ var current_xp := 0
 var health := max_health
 var invincible := false
 var attack_timer := 0.0
+var xp_gain_bonus := 0
 
 # Upgrade stats
 var projectile_damage := 1
@@ -25,7 +26,7 @@ var projectile_speed_boost := 0.0
 
 
 func _ready():
-	health = max_health
+	PlayerData.apply_to_player(self)
 	setup_weapons()
 
 func setup_weapons():
@@ -119,7 +120,7 @@ func die():
 
 
 func gain_xp(amount: int):
-	current_xp += amount
+	current_xp += amount + xp_gain_bonus
 	print("XP:", current_xp, "/", xp_to_next_level)
 
 	if current_xp >= xp_to_next_level:
