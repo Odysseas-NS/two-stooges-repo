@@ -56,6 +56,7 @@ class Weapon:
 				timer = cooldown
 
 
+@warning_ignore("shadowed_variable")
 func get_effective_cooldown(base_cooldown: float, weapon_id: String, player: Node2D) -> float:
 	var cooldown: float = base_cooldown
 	if player != null and weapon_id == "axe" and "fire_rate" in player:
