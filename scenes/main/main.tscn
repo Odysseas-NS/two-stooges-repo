@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://be7k5ypbb0km0"]
+[gd_scene load_steps=10 format=3 uid="uid://be7k5ypbb0km0"]
 
 [ext_resource type="PackedScene" uid="uid://d1w5ccem33kle" path="res://scenes/player/player.tscn" id="1_hyk8p"]
 [ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main.gd" id="1_iuonh"]
 [ext_resource type="PackedScene" uid="uid://drhkcd78218ty" path="res://scenes/enemy/enemy.tscn" id="2_k2fmo"]
+[ext_resource type="PackedScene" uid="uid://dinfinitebg001" path="res://scenes/maps/infinite_background.tscn" id="2_infinite_bg"]
 [ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="3_hujxm"]
 [ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/difficulty_manager.gd" id="4_l3cfh"]
 [ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/upgrade_manager.gd" id="6_upgrade_mgr"]
@@ -13,9 +14,10 @@
 script = ExtResource("1_iuonh")
 enemy_scene = ExtResource("2_k2fmo")
 
+[node name="InfiniteBackground" parent="." instance=ExtResource("2_infinite_bg")]
+
 [node name="Map" parent="." instance=ExtResource("3_hujxm")]
 z_index = 1
-texture_repeat = 2
 position = Vector2(-988.00006, -742)
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]

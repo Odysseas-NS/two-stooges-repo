@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://cfy44w3chsism"]
+
+[ext_resource type="Script" path="res://scripts/misc/infinite_background.gd" id="1_bg"]
+[ext_resource type="Texture2D" uid="uid://63purc2yd2gs" path="res://assets/map/TS_Forest_Grass.png" id="2_grass"]
+
+[node name="InfiniteBackground" type="Node2D"]
+z_index = -50
+script = ExtResource("1_bg")
+texture = ExtResource("2_grass")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
