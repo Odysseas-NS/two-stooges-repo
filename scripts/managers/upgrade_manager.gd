@@ -130,7 +130,8 @@ func get_random_upgrades(count: int = 3, player: Node = null) -> Array[Upgrade]:
 			var weapon_id = upgrade.id.replace("unlock_", "")
 			if player != null and player.has_method("has_weapon"):
 				if not player.has_weapon(weapon_id):
-					weapon_upgrades.append(upgrade)
+					if _can_unlock_more_weapons(player):
+						weapon_upgrades.append(upgrade)
 			else:
 				push_warning(
 					"UpgradeManager: player not provided; weapon unlock '%s' cannot be filtered"
@@ -156,6 +157,11 @@ func get_random_upgrades(count: int = 3, player: Node = null) -> Array[Upgrade]:
 			result.append(upgrade)
 	
 	return result
+
+func _can_unlock_more_weapons(player: Node) -> bool:
+	if player.weapon_manager == null:
+		return true
+	return player.weapon_manager.weapons.size() < player.weapon_manager.MAX_WEAPONS
 
 func apply_upgrade(upgrade: Upgrade, player: Node):
 	if upgrade.apply_func.is_valid():

@@ -1,12 +1,12 @@
 [gd_scene load_steps=10 format=3 uid="uid://be7k5ypbb0km0"]
 
 [ext_resource type="PackedScene" uid="uid://d1w5ccem33kle" path="res://scenes/player/player.tscn" id="1_hyk8p"]
-[ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main.gd" id="1_iuonh"]
+[ext_resource type="Script" uid="uid://cii5hxk58i6ok" path="res://scripts/main/main.gd" id="1_iuonh"]
+[ext_resource type="PackedScene" uid="uid://cfy44w3chsism" path="res://scenes/maps/infinite_background.tscn" id="2_infinite_bg"]
 [ext_resource type="PackedScene" uid="uid://drhkcd78218ty" path="res://scenes/enemy/enemy.tscn" id="2_k2fmo"]
-[ext_resource type="PackedScene" uid="uid://dinfinitebg001" path="res://scenes/maps/infinite_background.tscn" id="2_infinite_bg"]
 [ext_resource type="PackedScene" uid="uid://ctsxe2yp7rap4" path="res://scenes/maps/testing_map/testing_map.tscn" id="3_hujxm"]
-[ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/difficulty_manager.gd" id="4_l3cfh"]
-[ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/upgrade_manager.gd" id="6_upgrade_mgr"]
+[ext_resource type="Script" uid="uid://ycitvtnsfddn" path="res://scripts/managers/difficulty_manager.gd" id="4_l3cfh"]
+[ext_resource type="Script" uid="uid://bgvjd6ouprrs6" path="res://scripts/managers/upgrade_manager.gd" id="6_upgrade_mgr"]
 [ext_resource type="Texture2D" uid="uid://cva03kvexvhgq" path="res://assets/map/Bushes.png" id="7_yyfjg"]
 [ext_resource type="Texture2D" uid="uid://bv38s24p4kmq2" path="res://assets/map/Tree.png" id="8_b1x3f"]
 

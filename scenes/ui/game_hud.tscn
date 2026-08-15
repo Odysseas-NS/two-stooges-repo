@@ -15,6 +15,14 @@ grow_horizontal = 2
 max_value = 5.0
 show_percentage = false
 
+[node name="WeaponSlots" type="HBoxContainer" parent="."]
+unique_name_in_owner = true
+offset_left = 16.0
+offset_top = 20.0
+offset_right = 292.0
+offset_bottom = 64.0
+theme_override_constants/separation = 4
+
 [node name="LevelLabel" type="Label" parent="."]
 unique_name_in_owner = true
 anchors_preset = 5
@@ -32,9 +40,9 @@ horizontal_alignment = 1
 [node name="TimerLabel" type="Label" parent="."]
 unique_name_in_owner = true
 offset_left = 16.0
-offset_top = 18.0
+offset_top = 72.0
 offset_right = 160.0
-offset_bottom = 42.0
+offset_bottom = 96.0
 theme_override_font_sizes/font_size = 18
 text = "00:00"
 

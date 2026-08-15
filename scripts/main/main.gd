@@ -4,6 +4,7 @@ extends Node2D
 @export var enemy_scene: PackedScene
 @export var upgrade_screen_scene: PackedScene = preload("res://scenes/ui/upgrade_screen.tscn")
 @export var game_hud_scene: PackedScene = preload("res://scenes/ui/game_hud.tscn")
+@export var pause_screen_scene: PackedScene = preload("res://scenes/ui/pause_screen.tscn")
 @export var spawn_distance_min := 600.0  # Minimum distance from player
 @export var spawn_distance_max := 800.0  # Maximum distance from player
 
@@ -14,6 +15,7 @@ extends Node2D
 
 var upgrade_screen: CanvasLayer
 var game_hud: CanvasLayer
+var pause_screen: CanvasLayer
 
 func _ready():
 	print("DifficultyManager:", difficulty_manager)
@@ -49,6 +51,11 @@ func _ready():
 	add_child(game_hud)
 	if game_hud.has_method("setup") and player != null:
 		game_hud.setup(player)
+
+	pause_screen = pause_screen_scene.instantiate()
+	add_child(pause_screen)
+	if pause_screen.has_method("setup"):
+		pause_screen.setup(upgrade_screen, %GameOver)
 
 
 

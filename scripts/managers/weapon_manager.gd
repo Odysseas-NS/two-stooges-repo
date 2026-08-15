@@ -1,5 +1,16 @@
 extends Node2D
 
+signal weapons_changed
+
+const MAX_WEAPONS := 6
+
+const WEAPON_ICONS := {
+	"projectile": "res://assets/weapons/axe.png",
+	"rotating_blade": "res://assets/weapons/blade.png",
+	"aoe_burst": "res://assets/weapons/aura.png",
+	"missile": "res://assets/weapons/missile.png",
+}
+
 var weapons: Array[Weapon] = []
 var player: Node2D
 
@@ -47,10 +58,22 @@ func _process(delta):
 	for weapon in weapons:
 		weapon.update(delta, player)
 
-func add_weapon(weapon: Weapon):
+func add_weapon(weapon: Weapon) -> bool:
+	if get_weapon(weapon.id) != null:
+		return false
+	if weapons.size() >= MAX_WEAPONS:
+		push_warning("Cannot add weapon %s: max weapons (%d) reached" % [weapon.name, MAX_WEAPONS])
+		return false
+
 	weapons.append(weapon)
 	weapon.enabled = true
 	print("✅ Weapon unlocked: ", weapon.name)
+	weapons_changed.emit()
+	return true
+
+
+func get_weapon_icon(weapon_id: String) -> String:
+	return WEAPON_ICONS.get(weapon_id, "")
 
 func unlock_rotating_blade():
 	if get_weapon("rotating_blade") != null:
