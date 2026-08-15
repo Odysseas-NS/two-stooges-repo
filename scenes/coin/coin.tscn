@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://b8kcoinpickup01"]
+
+[ext_resource type="Script" path="res://scripts/misc/coin.gd" id="1_coin"]
+[ext_resource type="Texture2D" path="res://assets/misc/coin.png" id="2_coin_tex"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_coin"]
+radius = 18.0
+
+[node name="Coin" type="Area2D"]
+z_index = 6
+collision_layer = 4
+script = ExtResource("1_coin")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 6
+scale = Vector2(0.35, 0.35)
+texture = ExtResource("2_coin_tex")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 6
+shape = SubResource("CircleShape2D_coin")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

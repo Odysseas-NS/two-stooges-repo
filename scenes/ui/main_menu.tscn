@@ -1,18 +1,18 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=3 format=3 uid="uid://yyk0cyumw3po"]
 
-[ext_resource type="Script" path="res://scripts/misc/main_menu.gd" id="1_menu"]
+[ext_resource type="Script" uid="uid://dsy7sacu6yti4" path="res://scripts/misc/main_menu.gd" id="1_menu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+content_margin_left = 36.0
+content_margin_top = 32.0
+content_margin_right = 36.0
+content_margin_bottom = 32.0
 bg_color = Color(0.12, 0.08, 0.22, 0.96)
 border_width_left = 4
 border_width_top = 4
 border_width_right = 4
 border_width_bottom = 4
 border_color = Color(0.78, 0.64, 0.24, 1)
-content_margin_left = 36
-content_margin_top = 32
-content_margin_right = 36
-content_margin_bottom = 32
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -41,7 +41,7 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="MenuPanel" type="PanelContainer" parent="CenterContainer"]
-custom_minimum_size = Vector2(420, 420)
+custom_minimum_size = Vector2(420, 480)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
 
@@ -61,6 +61,14 @@ layout_mode = 2
 theme_override_colors/font_color = Color(0.72, 0.72, 0.76, 1)
 theme_override_font_sizes/font_size = 16
 text = "Survive the horde"
+horizontal_alignment = 1
+
+[node name="CoinsLabel" type="Label" parent="CenterContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.92, 0.78, 0.28, 1)
+theme_override_font_sizes/font_size = 18
+text = "Coins: 0"
 horizontal_alignment = 1
 
 [node name="Spacer" type="Control" parent="CenterContainer/MenuPanel/VBoxContainer"]
@@ -87,6 +95,13 @@ custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 size_flags_horizontal = 4
 text = "Upgrades"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MenuPanel/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Quit"
 
 [node name="PlaceholderPopup" type="PanelContainer" parent="."]
 unique_name_in_owner = true
@@ -127,4 +142,5 @@ text = "OK"
 [connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/OptionsButton" to="." method="_on_options_button_pressed"]
 [connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/UpgradesButton" to="." method="_on_upgrades_button_pressed"]
+[connection signal="pressed" from="CenterContainer/MenuPanel/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="PlaceholderPopup/VBoxContainer/ClosePlaceholderButton" to="." method="_on_close_placeholder_button_pressed"]

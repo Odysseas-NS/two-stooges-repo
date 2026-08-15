@@ -2,6 +2,7 @@ extends CanvasLayer
 
 const HP_COLOR := Color(0.85, 0.15, 0.15)
 const XP_COLOR := Color(0.2, 0.45, 0.95)
+const COIN_COLOR := Color(0.92, 0.78, 0.28)
 const BG_COLOR := Color(0.15, 0.15, 0.15, 0.85)
 const HP_BAR_OFFSET := Vector2(0, 58)
 
@@ -10,6 +11,7 @@ const HP_BAR_OFFSET := Vector2(0, 58)
 @onready var level_label: Label = %LevelLabel
 @onready var timer_label: Label = %TimerLabel
 @onready var kill_label: Label = %KillLabel
+@onready var coin_label: Label = %CoinLabel
 
 var player: Node2D = null
 var elapsed_time := 0.0
@@ -21,6 +23,15 @@ func _ready() -> void:
 	_style_bar(xp_bar, XP_COLOR, 0)
 	kill_label.text = "Kills: 0"
 	timer_label.text = "00:00"
+	coin_label.add_theme_color_override("font_color", COIN_COLOR)
+	_update_coins_label(PlayerData.coins)
+	if not PlayerData.coins_changed.is_connected(_update_coins_label):
+		PlayerData.coins_changed.connect(_update_coins_label)
+
+
+func _exit_tree() -> void:
+	if PlayerData.coins_changed.is_connected(_update_coins_label):
+		PlayerData.coins_changed.disconnect(_update_coins_label)
 
 
 func setup(player_node: Node2D) -> void:
@@ -31,6 +42,10 @@ func setup(player_node: Node2D) -> void:
 func register_kill() -> void:
 	kill_count += 1
 	kill_label.text = "Kills: %d" % kill_count
+
+
+func _update_coins_label(total: int) -> void:
+	coin_label.text = "Coins: %d" % total
 
 
 func _process(delta: float) -> void:
